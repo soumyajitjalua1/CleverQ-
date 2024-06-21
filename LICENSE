@@ -1,0 +1,11 @@
+
+### Explanation:
+- **Description:** Provides a brief overview of your Streamlit application.
+- **Features:** Highlights key features of the app.
+- **Installation:** Steps to clone, install dependencies, set up environment variables, and run the app locally.
+- **Usage:** Instructions on how to use the application.
+- **License:** Specifies the licensing information for your project. Make sure to include a `LICENSE` file in your repository with the appropriate license text (e.g., MIT License, as indicated).
+
+### License File (`LICENSE`):
+Create a file named `LICENSE` in your repository root directory and add the following text for the MIT License:
+
