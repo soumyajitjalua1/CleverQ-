@@ -32,4 +32,4 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
 - The question history section displays all previously asked questions and their corresponding responses.
 
 ## License
-- This project is licensed under the MIT License - see the LICENSE file for details.
+- This project is licensed under the MIT License - see the LICENSE file for details.See the [LICENSE]() file for details.
