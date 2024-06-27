@@ -26,14 +26,16 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
     ```bash
          streamlit run app.py
 
-4. App Link:
-   
-      https://vessxjuxunq8wjhiupcx8p.streamlit.app/
+
 ## Used
 
 - Input your question in the text area provided and click "Submit".
 - The app will generate a response using Google's AI based on your input.
 - The question history section displays all previously asked questions and their corresponding responses.
+
+##  App Link:
+   
+      https://vessxjuxunq8wjhiupcx8p.streamlit.app/
 
 ## License
 - This project is licensed under the MIT License - see the LICENSE file for details.See the [LICENSE](https://github.com/soumyajitjalua1/CleverQ-/blob/main/LICENSE) file for details.
