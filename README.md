@@ -58,7 +58,7 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
 
 ## App Link:
    
-      https://vessxjuxunq8wjhiupcx8p.streamlit.app/
+      https://claverq.streamlit.app/
 
 ## License
 - This project is licensed under the MIT License - see the LICENSE file for details.See the [LICENSE](https://github.com/soumyajitjalua1/CleverQ-/blob/main/LICENSE) file for details.
