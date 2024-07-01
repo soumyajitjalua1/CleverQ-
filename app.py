@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,9 +23,10 @@ model = genai.GenerativeModel("gemini-pro")
 def get_gemini_response(input_text):
     try:
         response = model.generate_content(input_text)
-        return response.text
+        return response.candidates[0].content.parts[0].text
     except Exception as e:
         st.error(f"Error generating response: {str(e)}")
+        return None
 
 # Initialize Streamlit app
 st.set_page_config(page_title="Q & A with CleverQ", layout="wide", initial_sidebar_state="expanded")
@@ -88,22 +90,40 @@ def main():
         """,
         unsafe_allow_html=True
     )
+    st.sidebar.date_input('Today\'s Date', datetime.now())
+    
+    # Initialize session state variables
+    if 'tabs' not in st.session_state:
+        st.session_state.tabs = {'Main': {'questions': [], 'responses': []}}
+    if 'current_tab' not in st.session_state:
+        st.session_state.current_tab = 'Main'
+
+    # Sidebar for managing tabs
+    with st.sidebar:
+        st.subheader("Conversation Tabs")
+        tab_names = list(st.session_state.tabs.keys())
+        selected_tab = st.selectbox("Select a tab:", tab_names, index=tab_names.index(st.session_state.current_tab))
+        new_tab_name = st.text_input("New tab name:")
+        if st.button("Create new tab"):
+            if new_tab_name and new_tab_name not in st.session_state.tabs:
+                st.session_state.tabs[new_tab_name] = {'questions': [], 'responses': []}
+                st.session_state.current_tab = new_tab_name
+                st.experimental_rerun()
+
+    # Update current tab based on sidebar selection
+    st.session_state.current_tab = selected_tab
 
     st.markdown("<div class='centered-title'>CleverQ 🤖</div>", unsafe_allow_html=True)
 
     st.header("Start Chat...")
 
-    # Initialize session state variables
-    if 'questions' not in st.session_state:
-        st.session_state.questions = []
-    if 'responses' not in st.session_state:
-        st.session_state.responses = []
+    # Initialize session state variables for input
     if 'current_input' not in st.session_state:
         st.session_state.current_input = ""
 
     # Input section for current question
     st.markdown('<div class="input-container">', unsafe_allow_html=True)
-    st.session_state.current_input = st.text_area(
+    input_question = st.text_area(
         "Input your question:", 
         value=st.session_state.current_input, 
         key="input_question", 
@@ -115,26 +135,28 @@ def main():
 
     # Submit button to generate response
     if st.button("Submit", key="submit_button"):
-        if st.session_state.current_input.strip():
-            response = get_gemini_response(st.session_state.current_input)
-            st.session_state.questions.insert(0, st.session_state.current_input)
-            st.session_state.responses.insert(0, response)
-            st.session_state.current_input = ""  # Clear input field
-            st.experimental_rerun()  # Rerun to update UI
+        if input_question.strip():
+            response = get_gemini_response(input_question)
+            if response:
+                st.session_state.tabs[st.session_state.current_tab]['questions'].insert(0, input_question)
+                st.session_state.tabs[st.session_state.current_tab]['responses'].insert(0, response)
+                st.session_state.current_input = ""  # Clear input field
+                st.experimental_rerun()  # Rerun to update UI
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Display all previous questions and responses
-    if st.session_state.questions:
+    # Display all previous questions and responses for the current tab
+    current_tab_data = st.session_state.tabs[st.session_state.current_tab]
+    if current_tab_data['questions']:
         st.header("Question History")
-        for i in range(len(st.session_state.questions)):
+        for i in range(len(current_tab_data['questions'])):
             st.markdown(
                 f"""
                 <div class="css-question-response-box">
                     <div>
-                        <strong>You Asked:</strong><br>{st.session_state.questions[i]}
+                        <strong>You Asked:</strong><br>{current_tab_data['questions'][i]}
                     </div>
                     <div>
-                        <strong>Response:</strong><br>{st.session_state.responses[i]}
+                        <strong>Response:</strong><br>{current_tab_data['responses'][i]}
                     </div>
                 </div>
                 """,
