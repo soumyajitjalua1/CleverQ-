@@ -6,6 +6,8 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
 
 - **Interactive Chat Interface:** Users can input questions and receive AI-generated responses in real-time.
 - **Question History:** Display of all previous questions and responses for easy tracking and review.
+-  **Multiple Conversation Tabs**: Users can create and manage multiple tabs, each maintaining its own question and response history.
+- **Interactive UI**: Clean and intuitive interface built with Streamlit.
 - **Dynamic Updates:** Updates the UI dynamically with new questions and responses without refreshing the page.
 
 ## Installation
@@ -13,7 +15,7 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone https://github.com/soumyajitjalua1/CleverQ-.git
    cd your-repository
 
 2. Install dependencies:
@@ -21,10 +23,21 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
     ```bash
      pip install -r requirements.txt
 
+3. Create a .env file:
+
+    ```bash
+    touch .env
+
+4. Add your Google API key to the .env file:
+
+     ```bash
+     GOOGLE_API_KEY=your-google-api-key
+
+
 3. Run the app:
 
     ```bash
-         streamlit run app.py
+    streamlit run app.py
 
 
 ## Used
@@ -33,9 +46,23 @@ Q & A with CleverQ is a Streamlit application that allows users to interactively
 - The app will generate a response using Google's AI based on your input.
 - The question history section displays all previously asked questions and their corresponding responses.
 
-##  App Link:
+## Project Structure
+   - ```bash
+      cleverq/
+      │
+      ├── .env                # Environment variables file
+      ├── app.py              # Main Streamlit application
+      ├── requirements.txt    # Python dependencies
+      └── README.md           # This README file
+
+
+## App Link:
    
       https://vessxjuxunq8wjhiupcx8p.streamlit.app/
 
 ## License
 - This project is licensed under the MIT License - see the LICENSE file for details.See the [LICENSE](https://github.com/soumyajitjalua1/CleverQ-/blob/main/LICENSE) file for details.
+
+## Acknowledgements
+- Streamlit for providing the framework to build interactive web applications.
+- Google Generative AI for the generative model used in this application.
